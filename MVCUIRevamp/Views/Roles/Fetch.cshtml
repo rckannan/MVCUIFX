@@ -1,0 +1,124 @@
+﻿@model IEnumerable<RithV.FX.EntityDTO.Security.Roles>
+
+@{
+    ViewBag.Title = "Fetch";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div id="page-title">
+
+    <h3>
+        Roles
+        <small>
+            to add or update roles
+        </small>
+    </h3>
+    <div id="breadcrumb-right">
+        <a href="@Url.Action("Create", "Roles")" class="btn medium bg-blue float-left">
+            <span class="glyph-icon icon-separator ">
+                <i class="glyph-icon icon-plus-sign-alt"></i>
+            </span>
+            <span class="button-content">
+                Add New
+            </span>
+        </a> 
+    </div>
+
+    </div><!-- #page-title -->
+<div id="page-content">
+
+<div class="example-box">
+    <div class="example-code"> 
+        <div class="row">
+
+            @if (ViewData.ModelState.Where(x => x.Key == string.Empty).Select(x => x).Any())
+            {
+                <div class="ui-dialog-buttonpane text-center">
+                    <div class="form-row">
+                        <div class="infobox error-bg mrg0A text-center">
+                            <p>@Html.ValidationSummary(true)</p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (@TempData["APIError"] != null)
+            {
+                <div class="ui-dialog-buttonpane text-center">
+                    <div class="form-row">
+                        <div class="infobox error-bg mrg0A text-center">
+                            <p>@TempData["APIError"] </p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (@TempData["Success"] != null)
+            {
+                <div class="ui-dialog-buttonpane text-center">
+                    <div class="form-row">
+                        <div class="infobox success-bg col-md-12 mrg0A text-center">
+                            <p>@TempData["Success"] </p>
+                        </div>
+                    </div>
+                </div>
+            }
+            @Html.AntiForgeryToken()
+            <table class="table" id="example1">
+                <thead>
+                <tr>
+                    <th>Actions</th>
+                    <th>Key</th>
+                    <th>Role</th>
+                    <th>Desc</th> 
+                </tr>
+                </thead>
+                <tbody>
+                
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <a href="javascript:;" title="" class="btn medium bg-blue" data-toggle="dropdown">
+                                    <span class="button-content">
+                                                <i class="glyph-icon font-size-11 icon-cog"></i>
+                                                <i class="glyph-icon font-size-11 icon-chevron-down"></i>
+                                            </span>
+                                </a>
+                                <ul class="dropdown-menu float-left">
+                                    <li>
+                                        <a href="@Url.Action("Edit", "Roles", new {id = item.Key})">
+                                            <i class="glyph-icon icon-edit mrg5R"></i>
+                                            <span>Edit</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Delete", "Roles", new {id = item.Key})" onclick=" return confirm('Are you sure... You want to Delete?') ">
+                                            <i class="glyph-icon icon-remove mrg5R"></i>
+                                            <span>Delete</span>
+                                        </a>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Key)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fldRole)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fldDescription)
+                        </td>
+
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    </div>

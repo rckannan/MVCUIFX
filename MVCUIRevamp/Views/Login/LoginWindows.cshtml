@@ -1,0 +1,84 @@
+﻿@model RithV.FX.EntityDTO.Security.LoginModelWoPass 
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="ui-widget-overlay bg-black opacity-60"></div>
+<div class="pad20A mrg25T">
+    <div class="row mrg25T">
+
+        @using (Html.BeginForm("LoginWindows", "Login",
+                        new { ReturnUrl = ViewBag.ReturnUrl },
+                        FormMethod.Post, new { @class = "col-md-4 center-margin form-vertical mrg25T" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="ui-dialog modal-dialog mrg25T" id="login-form" style="position: relative !important;">
+                @*<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+                    <span class="ui-dialog-title">Login</span>
+                </div>*@
+
+                <div class="profile-box content-box">
+                    <div class="content-box-header clearfix bg-blue-alt">
+                        <img width="36" src="/Content/assets/images/AI_Logo.png" alt="" />
+                        <div class="login-details">
+                            AEIOU UI CK
+                            <span>This is a sample Punch......</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="pad20A pad0B ui-dialog-content ui-widget-content">
+               
+                    <div class="form-row">
+                        <div class="form-label col-md-2">
+                            <label for="">
+                                Username:
+                            </label>
+                        </div>
+                        <div class="form-input col-md-10">
+                            <div class="form-input-icon">
+                                <i class="glyph-icon icon-male ui-state-default"></i>
+                                @Html.TextBoxFor(model => model.UserName, new { @type = "text", @placeholder = "User Name" })
+                                @Html.ValidationMessageFor(model => model.UserName, "")
+                                @*<input placeholder="User Name" type="text" name="" id="" />*@
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="ui-dialog-buttonpane text-center">
+                    <button type="submit" class="btn large primary-bg text-transform-upr font-bold font-size-11 radius-all-4" id="demo-form-valid" title="Validate!">
+                        <span class="button-content">
+                            Login
+                        </span>
+                    </button>
+                </div>
+
+                @if (ViewData.ModelState.Where(x => x.Key == string.Empty).Select(x => x).Any())
+                {
+                    <div class="ui-dialog-buttonpane text-center">
+                        <div class="form-row">
+                            <div class="infobox error-bg mrg0A">
+                                <p>@Html.ValidationSummary(true)</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (@ViewBag.mess != null)
+                {
+                    <div class="ui-dialog-buttonpane text-center">
+                        <div class="form-row">
+                            <div class="infobox success-bg col-md-6">
+                                <p>@ViewBag.mess</p>
+                            </div>
+                        </div>
+                    </div>
+                } 
+            </div> 
+        }
+    </div>
+</div>

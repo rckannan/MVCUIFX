@@ -1,0 +1,26 @@
+﻿
+@using NonFactors.Mvc.Grid;
+
+@model IEnumerable<TestControls.Controllers.tmp>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.id).Titled("id");
+        columns.Add(model => model.NAME).Titled("NAME").Filterable(true); 
+
+    })
+    .Filterable()
+    .Sortable()
+    .Pageable()
+      )
+ 
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

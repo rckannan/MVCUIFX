@@ -1,0 +1,133 @@
+﻿@model IEnumerable<RithV.FX.EntityDTO.Security.Users>
+
+@{
+    ViewBag.Title = "Fetch";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div id="page-title">
+
+    <h3>
+        Users
+        <small>
+            Test
+        </small>
+    </h3>
+    <div id="breadcrumb-right">
+        <a href="@Url.Action("Create", "Users")" class="btn medium bg-blue float-left">
+            <span class="glyph-icon icon-separator ">
+                <i class="glyph-icon icon-plus-sign-alt"></i>
+            </span>
+            <span class="button-content">
+                Add New
+            </span>
+        </a> 
+    </div>
+
+    </div><!-- #page-title -->
+<div id="page-content">
+
+<div class="example-box">
+    <div class="example-code">
+
+  
+        <div class="row">
+
+            @if (ViewData.ModelState.Where(x => x.Key == string.Empty).Select(x => x).Any())
+            {
+                <div class="ui-dialog-buttonpane text-center">
+                    <div class="form-row">
+                        <div class="infobox error-bg mrg0A text-center">
+                            <p>@Html.ValidationSummary(true)</p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (@TempData["APIError"] != null)
+            {
+                <div class="ui-dialog-buttonpane text-center">
+                    <div class="form-row">
+                        <div class="infobox error-bg mrg0A text-center">
+                            <p>@TempData["APIError"] </p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (@TempData["Success"] != null)
+            {
+                <div class="ui-dialog-buttonpane text-center">
+                    <div class="form-row">
+                        <div class="infobox success-bg col-md-12 text-center">
+                            <p>@TempData["Success"] </p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <table class="table" id="example1">
+                <thead>
+                <tr>
+                    <th>Actions</th>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>Full Name</th>
+                    <th>is Active</th>
+                    <th>EmailAddress</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <a href="javascript:;" title="" class="btn medium bg-blue" data-toggle="dropdown">
+                                    <span class="button-content">
+                                                <i class="glyph-icon font-size-11 icon-cog"></i>
+                                                <i class="glyph-icon font-size-11 icon-chevron-down"></i>
+                                            </span>
+                                </a>
+                                <ul class="dropdown-menu float-left">
+                                    <li>
+                                        <a href="@Url.Action("Edit", "Users", new {id = item.Key})">
+                                            <i class="glyph-icon icon-edit mrg5R"></i>
+                                            <span>Edit</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Edit", "Users", new {id = item.Key})">
+                                            <i class="glyph-icon icon-remove mrg5R"></i>
+                                            <span>Delete</span>
+                                        </a>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Key)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fldUserName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fldFullUserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fldActiveUser)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fldEmailAddress)
+                        </td>
+
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    </div>

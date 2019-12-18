@@ -1,0 +1,192 @@
+﻿@model RithV.FX.EntityDTO.Security.Users
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div id="page-title">
+    <h3>
+        User
+        <small>
+            to edit a user
+        </small>
+    </h3> 
+</div><!-- #page-title -->
+<div id="page-content">
+
+    <div class="example-box">
+        <div class="example-code">
+            <div class="row">
+                @if (ViewData.ModelState.Where(x => x.Key == string.Empty).Select(x => x).Any())
+                {
+                    <div class="ui-dialog-buttonpane text-center">
+                        <div class="form-row">
+                            <div class="infobox error-bg mrg0A text-center">
+                                <p>@Html.ValidationSummary(true)</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (@TempData["APIError"] != null)
+                {
+                    <div class="ui-dialog-buttonpane text-center">
+                        <div class="form-row">
+                            <div class="infobox error-bg mrg0A text-center">
+                                <p>@TempData["APIError"] </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (@TempData["Success"] != null)
+                {
+                    <div class="ui-dialog-buttonpane text-center">
+                        <div class="form-row">
+                            <div class="infobox success-bg col-md-12 mrg0A text-center">
+                                <p>@TempData["Success"] </p>
+                            </div>
+                        </div>
+                    </div>
+                   
+                }
+
+                @*<div class="row">
+                    <a href="@Url.Action("Create", "Users")" class="btn large bg-blue float-left mrg20L">
+
+                        <span class="glyph-icon icon-separator">
+                            <i class="glyph-icon icon-plus-sign-alt"></i>
+                        </span>
+                        <span class="button-content">
+                            Add New
+                        </span>
+                    </a>
+                </div>*@
+
+               
+
+                @using (Html.BeginForm("Edit", "Users",
+                    new {ReturnUrl = ViewBag.ReturnUrl},
+                    FormMethod.Post, new {@class = "col-md-6 form-vertical center-margin"}))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-row">
+                        <div class="form-label col-md-1">
+                            @Html.LabelFor(model => model.Key)
+                        </div>
+                        <div class="form-input col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.TextBoxFor(model => model.Key, new {  disabled = "disabled", @readonly = "readonly"   })
+                                    @Html.HiddenFor(model => model.Key)
+                                    @Html.ValidationMessageFor(model => model.Key, "", new {@class = "text-danger"})
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-label col-md-1">
+                            @Html.LabelFor(model => model.fldUserName)
+                        </div>
+                        <div class="form-input col-md-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.fldUserName, new {@type = "text", @placeholder = "User Name"})
+                                    @Html.ValidationMessageFor(model => model.fldUserName, "", new {@class = "text-danger"})
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-label col-md-2">
+                            @Html.LabelFor(model => model.fldFullUserName)
+                        </div>
+                        <div class="form-input col-md-5">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.fldFullUserName, new {@type = "text", @placeholder = "Full User Name"})
+                                    @Html.ValidationMessageFor(model => model.fldFullUserName, "", new {@class = "text-danger"})
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-label col-md-1">
+                            @Html.LabelFor(model => model.fldEmailAddress)
+                        </div>
+                        <div class="form-input col-md-5">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.fldEmailAddress, new {@type = "email", @placeholder = "Email"})
+                                    @Html.ValidationMessageFor(model => model.fldEmailAddress, "", new {@class = "text-danger"})
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-label col-md-1">
+
+                        </div>
+                        <div class="form-input col-md-3">
+                            <div class="row">
+                                <div class="form-checkbox-radio col-md-12">
+                                    @Html.EditorFor(model => model.fldActiveUser, new {@type = "checkbox", @class = "custom - checkbox"})
+                                    @Html.LabelFor(model => model.fldActiveUser)
+                                    @Html.HiddenFor(model => model.fldPassword)
+                                    @Html.HiddenFor(model => model.fldFailedAttempt)
+                                    @Html.HiddenFor(model => model.fldForceChangePassword)
+                                    @*@Html.HiddenFor(model => model.fldLastUpdated)*@
+                                    @Html.HiddenFor(model => model.fldPasswordLastUpdated)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="divider"></div>
+                    <div class="ui-dialog-buttonpane ">
+                        <button type="submit" class="btn medium primary-bg text-transform-upr font-bold font-size-11 radius-all-4 float-right" title="Validate!">
+                            <span class="button-content">
+                                Save
+                            </span>
+                        </button>
+
+                        <button type="button" onclick="location.href = '@Url.Action("fetch", "users")'"
+                                class="btn medium primary-bg text-transform-upr font-bold font-size-11 radius-all-4 float-left">
+                            <span class="button-content">
+                                cancel
+                            </span>
+                        </button>
+
+                        @*<button type="button"  data-layout="top" data-type="success" id="NotifyAlert"
+                                class="btn large primary-bg text-transform-upr font-bold font-size-11 radius-all-4 float-left noty">
+                            <span class="button-content">
+                                Noty
+                            </span>
+                        </button>*@
+                    </div>
+                }
+            </div>
+        </div>
+
+       
+    </div>
+</div>
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
